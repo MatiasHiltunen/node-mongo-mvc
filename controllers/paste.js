@@ -5,7 +5,7 @@ import { singlePastePageTemplate } from "../views/templates/singlePastePage.js";
 import Paste from "../models/paste.js";
 import hljs from 'highlight.js'
 
-async function allPastesView(req, res, next) {
+async function getAllPastes(req, res, next) {
     try {
         const pasteItems = await Paste.find({});
         if (!pasteItems) return res.status(404).send();
@@ -16,7 +16,7 @@ async function allPastesView(req, res, next) {
     }
 }
 
-async function onePasteByIdView(req, res, next) {
+async function getPaste(req, res, next) {
     if (!req.params.id) return res.status(400).send();
     try {
         const paste = await Paste.findById(req.params.id);
@@ -29,12 +29,12 @@ async function onePasteByIdView(req, res, next) {
 }
 
 
-async function pasteCreateView(req, res, next) {
+async function getCreateNewPaste(req, res, next) {
     const html = defaultTemplate({ content: template('pasteCreate') })
     res.send(html);
 }
 
-async function createNewPaste(req, res, next) {
+async function postCreateNewPaste(req, res, next) {
     try {
 
         const { title, description, body } = req.body
@@ -75,9 +75,9 @@ async function deletePaste(req, res, next) {
 }
 
 export default {
-    allPastesView,
-    onePasteByIdView,
-    createNewPaste,
-    pasteCreateView,
+    getPaste,
+    getAllPastes,
+    getCreateNewPaste,
+    postCreateNewPaste,
     deletePaste
 }

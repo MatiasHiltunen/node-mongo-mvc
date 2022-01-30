@@ -15,7 +15,7 @@ mongoose.connect(process.env.MONGO_URL, {
 
 
 const app = express();
-app.use(express.urlencoded())
+app.use(express.urlencoded({ extended: true }))
 app.use(router);
 
 app.use((err, req, res, next) => {
@@ -23,6 +23,7 @@ app.use((err, req, res, next) => {
     res.send(errorPage(error))
 })
 
-app.listen(5000);
+const port = process.env.PORT || 3000
+app.listen(port);
 
-console.log("Server is running on port 5000")
+console.log("Server is running on port " + port)
