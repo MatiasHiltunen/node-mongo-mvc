@@ -1,0 +1,18 @@
+<div class="col">
+    <div class="card shadow-sm dark-bg ">
+        <div class="card-body">
+            <div class="overflow-auto" style="max-height: 400px;">
+                <pre><code>{{ body }}</code></pre>
+            </div>
+            <p class="card-text"> {{ description }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-outline-secondary" href="/paste/{{id}}">Avaa</a>
+                    <form action="/delete/{{id}}" method="get">
+                        <button type="submit" class="btn btn-sm btn-outline-secondary">Poista</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
