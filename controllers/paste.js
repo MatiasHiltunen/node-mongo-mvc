@@ -1,40 +1,39 @@
-import { template } from "../tools/templateEngine.js";
-import { defaultTemplate } from "../views/templates/defaultPage.js";
-import { allPastesTemplate } from "../views/templates/allPastesPage.js";
-import { singlePastePageTemplate } from "../views/templates/singlePastePage.js";
+import { defaultTemplate } from "../tools/templateEngine.js";
+import { pasteViewAll } from "../views/pasteViewAll/pasteViewAll.js";
+import { pasteViewSingle } from "../views/pasteViewSingle/pasteViewSingle.js";
+import { pasteCreate } from "../views/pasteCreate/pasteCreate.js";
 import Paste from "../models/paste.js";
 import hljs from 'highlight.js'
 
-async function getAllPastes(req, res, next) {
+const getAllPastes = async(req, res, next) => {
     try {
         const pasteItems = await Paste.find({});
         if (!pasteItems) return res.status(404).send();
 
-        res.send(allPastesTemplate(pasteItems));
+        res.send(pasteViewAll(pasteItems));
     } catch (e) {
         next(e);
     }
 }
 
-async function getPaste(req, res, next) {
+const getPaste = async(req, res, next) => {
     if (!req.params.id) return res.status(400).send();
     try {
         const paste = await Paste.findById(req.params.id);
         if (!paste) return res.status(404).send();
 
-        res.send(singlePastePageTemplate(paste));
+        res.send(pasteViewSingle(paste));
     } catch (e) {
         next(e);
     }
 }
 
 
-async function getCreateNewPaste(req, res, next) {
-    const html = defaultTemplate({ content: template('pasteCreate') })
-    res.send(html);
+const getCreateNewPaste = (req, res, next) => {
+    res.send(pasteCreate);
 }
 
-async function postCreateNewPaste(req, res, next) {
+const postCreateNewPaste = async(req, res, next) => {
     try {
 
         const { title, description, body } = req.body
@@ -42,24 +41,22 @@ async function postCreateNewPaste(req, res, next) {
         if (!title || !description || !body) return next('Kaikki kentät tulee täyttää')
 
         const paste = new Paste({
-            title: title,
-            description: description,
+            title,
+            description,
             body: hljs.highlightAuto(body).value
         });
 
         const data = await paste.save();
         if (!data) return res.status(500).send()
 
-        res.send(singlePastePageTemplate(data));
+        res.send(pasteViewSingle(data));
 
     } catch (e) {
         next(e)
     }
-
 }
 
-
-async function deletePaste(req, res, next) {
+const deletePaste = async(req, res, next) => {
     if (!req.params.id) return res.status(400).send();
     try {
         const paste = await Paste.findById(req.params.id);

@@ -1,6 +1,6 @@
 import express from "express";
 import router from "./router.js";
-import { errorPage } from "./views/templates/errorPage.js";
+import { errorPage } from "./views/errorPage/errorPage.js";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 

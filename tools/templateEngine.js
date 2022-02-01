@@ -2,10 +2,9 @@ import { readFileSync } from 'fs'
 
 const regExp = new RegExp(/\{{(.*?)\}}/, 'g')
 
+export const template = (templateName, vars) => {
 
-export function template(templateName, vars) {
-
-    let html = readFileSync(`./views/html/${templateName}.html`, 'utf-8')
+    let html = readFileSync(`./views/${templateName}/${templateName}.html`, 'utf-8')
 
     const matches = html.match(regExp)
     if (!matches) return html
@@ -22,4 +21,8 @@ export function template(templateName, vars) {
     }
 
     return html
+}
+
+export const defaultTemplate = ({ content = '' }) => {
+    return template('index', { content })
 }
