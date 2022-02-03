@@ -1,16 +1,20 @@
-#MVC Esimerkki Node.js:llä
+# MVC Esimerkki Node.js:llä
 
 Kloonaa projekti:
->git clone https://github.com/MatiasHiltunen/node-mongo-mvc.git
-
+```
+git clone https://github.com/MatiasHiltunen/node-mongo-mvc.git
+```
 Mene kansioon:
->cd node-mongo-mvc
+```
+cd node-mongo-mvc
+```
 
 Asenna npm paketit
->npm install
+```
+npm install
+```
 
-Luo .env tiedosto .env.example:n mukaisesti
-
+Luo .env tiedosto .env.example:n mukaisesti projektikansion juureen
 
 Seuraavaksi tarvitaan tietokanta.
 
@@ -22,6 +26,8 @@ https://blog.logrocket.com/building-structuring-node-js-mvc-application/
 Lisää oma mongo atlas connection string .env tiedostoon
 
 Käynnistä kehityspalvelin
->npm run dev
+```
+npm run dev
+```
 
 Mene selaimessa osoitteeseen joka tulostuu konsoliin
