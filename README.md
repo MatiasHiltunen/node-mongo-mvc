@@ -1,14 +1,5 @@
 # MVC Esimerkki Node.js:llä
 
-Kloonaa projekti:
-```
-git clone https://github.com/MatiasHiltunen/node-mongo-mvc.git
-```
-Mene kansioon:
-```
-cd node-mongo-mvc
-```
-
 Asenna npm paketit
 ```
 npm install
