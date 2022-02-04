@@ -21,4 +21,3 @@ Käynnistä kehityspalvelin
 npm run dev
 ```
 
-Mene selaimessa osoitteeseen joka tulostuu konsoliin
