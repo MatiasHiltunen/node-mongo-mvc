@@ -19,6 +19,7 @@
         "dotenv": "^14.3.2",
         "express": "^4.17.2",
         "highlight.js": "^11.4.0",
+        "html-escaper": "^3.0.3",
         "mongodb": "^4.3.1",
         "mongoose": "^6.1.8"
     },

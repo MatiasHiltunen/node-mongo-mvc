@@ -2,9 +2,9 @@ import Paste from "../models/paste.js";
 import hljs from 'highlight.js'
 import { defaultTemplate } from "../views/index/default.js";
 import { pasteCreate, pasteViewAll, pasteViewSingle } from "../views/paste/paste.js";
+import { escape } from "html-escaper";
 
-
-const getAllPastes = async(req, res, next) => {
+const getAllPastes = async (req, res, next) => {
     try {
         const pasteItems = await Paste.find({});
         if (!pasteItems) return res.status(404).send();
@@ -15,7 +15,7 @@ const getAllPastes = async(req, res, next) => {
     }
 }
 
-const getPaste = async(req, res, next) => {
+const getPaste = async (req, res, next) => {
     if (!req.params.id) return res.status(400).send();
     try {
         const paste = await Paste.findById(req.params.id);
@@ -33,7 +33,7 @@ const getCreateNewPaste = (req, res, next) => {
 }
 
 // Uuden pasten luominen, ottaa vastaan POST requestin
-const postCreateNewPaste = async(req, res, next) => {
+const postCreateNewPaste = async (req, res, next) => {
 
     try {
         // Ottaa vastaan POST requestin bodyssä seuraavat tiedot:
@@ -46,8 +46,9 @@ const postCreateNewPaste = async(req, res, next) => {
 
         // Luodaan uusi Paste instanssi Paste modelin perusteella
         const paste = new Paste({
-            title,
-            description,
+            // Poistetaan XSS haavoittuvuus
+            title: escape(title),
+            description: escape(description),
             // Lisätään highlight.js:n muutokset body datalle eli koodipastelle.
             // highlightAuto metodi yrittää tunnistaa koodin ja laittaa värit sen perusteella.
             // Käsittely hoitaa samalla string escapen body -datalle, mites muut datat?
@@ -71,7 +72,7 @@ const postCreateNewPaste = async(req, res, next) => {
     }
 }
 
-const deletePaste = async(req, res, next) => {
+const deletePaste = async (req, res, next) => {
     if (!req.params.id) return res.status(400).send();
     try {
         const paste = await Paste.findById(req.params.id);
