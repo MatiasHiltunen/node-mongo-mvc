@@ -1,27 +1,25 @@
 import Paste from "../models/paste.js";
 import hljs from 'highlight.js'
-import { defaultTemplate } from "../views/index/default.js";
-import { pasteCreate, pasteViewAll, pasteViewSingle } from "../views/paste/paste.js";
 import { escape } from "html-escaper";
 
-const getAllPastes = async (req, res, next) => {
+const getAllPastes = async(req, res, next) => {
     try {
         const pasteItems = await Paste.find({});
         if (!pasteItems) return res.status(404).send();
 
-        res.send(pasteViewAll(pasteItems));
+        res.render('paste/pasteViewAll', { pasteItems })
     } catch (e) {
         next(e);
     }
 }
 
-const getPaste = async (req, res, next) => {
+const getPaste = async(req, res, next) => {
     if (!req.params.id) return res.status(400).send();
     try {
         const paste = await Paste.findById(req.params.id);
         if (!paste) return res.status(404).send();
 
-        res.send(pasteViewSingle(paste));
+        res.render('paste/pasteViewSingle', paste)
     } catch (e) {
         next(e);
     }
@@ -29,11 +27,11 @@ const getPaste = async (req, res, next) => {
 
 
 const getCreateNewPaste = (req, res, next) => {
-    res.send(pasteCreate);
+    res.render('paste/pasteViewCreate')
 }
 
 // Uuden pasten luominen, ottaa vastaan POST requestin
-const postCreateNewPaste = async (req, res, next) => {
+const postCreateNewPaste = async(req, res, next) => {
 
     try {
         // Ottaa vastaan POST requestin bodyssä seuraavat tiedot:
@@ -64,7 +62,7 @@ const postCreateNewPaste = async (req, res, next) => {
 
         // Uusi data luotu onnistuneesti
         // Luodaan pasteViewSingle html sivu ja palautetaan se selaimelle luodun paste datan kanssa
-        res.send(pasteViewSingle(data));
+        res.render('paste/pasteViewSingle', paste)
 
     } catch (e) {
         // Jos ohjelma kaatuu niin lähetetään error middlewaren käsiteltäväksi
@@ -72,16 +70,15 @@ const postCreateNewPaste = async (req, res, next) => {
     }
 }
 
-const deletePaste = async (req, res, next) => {
+const deletePaste = async(req, res, next) => {
     if (!req.params.id) return res.status(400).send();
     try {
         const paste = await Paste.findById(req.params.id);
         if (!paste) return res.status(404).send();
         await paste.delete();
 
-        res.send(defaultTemplate({
-            content: `<h2>Poisto onnistui</h2><small>`
-        }))
+        next("Poisto onnistui")
+
     } catch (e) {
         next(e);
     }

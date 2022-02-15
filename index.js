@@ -2,7 +2,7 @@ import express from "express";
 import router from "./src/router.js";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-
+import path from 'path'
 dotenv.config()
 
 mongoose.connect(process.env.MONGO_URL, {
@@ -14,6 +14,9 @@ mongoose.connect(process.env.MONGO_URL, {
 
 
 const app = express();
+
+app.set('view engine', 'ejs')
+app.set('views', 'src/views')
 app.use(express.urlencoded({ extended: true }))
 app.use(router);
 
