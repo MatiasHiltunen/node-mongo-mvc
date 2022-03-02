@@ -58,11 +58,14 @@ const postCreateNewPaste = async(req, res, next) => {
 
         // Jos tietokanta ei anna vastausta niin toiminto on epäonnistunut
         // ja lähetetään error status 500 - internal server error
-        if (!data) return res.status(500).send()
+        if (!data) {
+            return res.status(500).send()
+        }
+
 
         // Uusi data luotu onnistuneesti
         // Luodaan pasteViewSingle html sivu ja palautetaan se selaimelle luodun paste datan kanssa
-        res.render('paste/pasteViewSingle', paste)
+        res.render('paste/pasteViewSingle', data)
 
     } catch (e) {
         // Jos ohjelma kaatuu niin lähetetään error middlewaren käsiteltäväksi

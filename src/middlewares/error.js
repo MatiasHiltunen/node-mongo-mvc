@@ -1,4 +1,4 @@
 export const catchError = (err, req, res, next) => {
-    const error = err.toString()
-    res.render('error/error', { text: error })
+    const msg = err.toString()
+    res.render('error/error', { msg: msg })
 }
