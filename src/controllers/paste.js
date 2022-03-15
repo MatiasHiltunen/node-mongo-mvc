@@ -23,17 +23,6 @@ const getPaste = async(req, res, next) => {
         const paste = await Paste.findById(req.params.id);
         if (!paste) return res.status(404).send();
 
-
-
-        paste.testi = 'Otsikko'
-            /* 
-            {
-                _id: new ObjectId("62207624d6cad8d17b7fb5d2"),
-                title: 'testi',
-                description: 'testi',
-                body: 'asdasd'
-            }
-            */
         res.render('paste/pasteViewSingle', paste)
     } catch (e) {
         next(e);
